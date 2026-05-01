@@ -13,4 +13,3 @@ def np_cat(mat1, mat2, axis=0):
         A new concatenated numpy.ndarray
     """
     return np.concatenate((mat1, mat2), axis=axis)
-    
