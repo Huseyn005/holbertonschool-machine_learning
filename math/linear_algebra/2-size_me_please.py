@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Module for calculating matrix shape."""
+
+
 def matrix_shape(matrix):
     """
     Calculate the shape of a matrix.
@@ -16,4 +18,3 @@ def matrix_shape(matrix):
             break
         current = current[0]
     return shape
-    
