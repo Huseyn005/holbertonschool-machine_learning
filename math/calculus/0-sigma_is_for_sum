@@ -1,1 +1,18 @@
-3
+#!/usr/bin/env python3
+"""Module to calculate the sigma notation (summation)"""
+
+
+def sigma_notation(n, m):
+    """
+    Calculates the sum of i from n to m
+    Returns the sum, or None if m or n are not integers,
+    or None if m < n
+    """
+    if not isinstance(n, int) or not isinstance(m, int):
+        return None
+    if m < n:
+        return None
+
+    # sum(range(start, stop)) is start + ... + (stop - 1)
+    # We use m + 1 to include m in the sum
+    return sum(range(n, m + 1))
