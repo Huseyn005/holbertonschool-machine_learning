@@ -12,5 +12,5 @@ def summation_i_squared(n):
     if n < 0:
         return None
 
-    # Using the square pyramidal number formula
+    # Using the square pyramidal number formula to avoid loops
     return (n * (n + 1) * (2 * n + 1)) // 6
