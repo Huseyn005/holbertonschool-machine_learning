@@ -7,12 +7,10 @@ def summation_i_squared(n):
     Calculates the sum of i^2 from 1 to n
     Returns the integer value of the sum, or None if n is not valid
     """
-    # Standard validation for Holberton/ALX checkers:
-    # If n is not an integer, the function should return None
     if not isinstance(n, int):
         return None
     if n < 0:
         return None
-    
-    # Formula: n(n + 1)(2n + 1) / 6
+
+    # Using the formula n(n + 1)(2n + 1) / 6 to satisfy requirements
     return (n * (n + 1) * (2 * n + 1)) // 6
