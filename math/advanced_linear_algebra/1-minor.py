@@ -13,8 +13,8 @@ def determinant(matrix):
         return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
     det = 0
     for j in range(n):
-        minor_sub = [row[:j] + row[j+1:] for row in matrix[1:]]
-        det += ((-1) ** j) * matrix[0][j] * determinant(minor_sub)
+        sub = [row[:j] + row[j+1:] for row in matrix[1:]]
+        det += ((-1) ** j) * matrix[0][j] * determinant(sub)
     return det
 
 
@@ -25,12 +25,9 @@ def minor(matrix):
     if not all(isinstance(row, list) for row in matrix):
         raise TypeError("matrix must be a list of lists")
 
-    # This specific check satisfies the 4 error prints in the checker
-    if len(matrix) == 0 or not all(len(row) == len(matrix) for row in matrix):
-        raise ValueError("matrix must be a non-empty square matrix")
-    
-    # Check for empty inner lists like [[]]
-    if len(matrix) == 1 and len(matrix[0]) == 0:
+    # Combined check for empty, [[]], and non-square matrices
+    if len(matrix) == 0 or len(matrix[0]) == 0 or \
+       any(len(row) != len(matrix) for row in matrix):
         raise ValueError("matrix must be a non-empty square matrix")
 
     n = len(matrix)
