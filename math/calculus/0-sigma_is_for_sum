@@ -1,17 +1,1 @@
-#!/usr/bin/env python3
-"""Module to calculate the sigma notation (summation)"""
-
-
-def sigma_notation(n, m):
-    """
-    Calculates the sum of i from n to m
-    Returns the sum, or None if m < n
-    """
-    if not isinstance(n, int) or not isinstance(m, int):
-        return None
-    if m < n:
-        return None
-    
-    # Formula for arithmetic progression: (count * (first + last)) / 2
-    # Or use a simple loop/sum range
-    return sum(range(n, m + 1))
+3
