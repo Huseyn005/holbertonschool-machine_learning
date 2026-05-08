@@ -1,31 +1,34 @@
 #!/usr/bin/env python3
-"""Module to calculate the determinant of a matrix"""
+"""Module to calculate the definiteness of a matrix"""
+import numpy as np
 
 
-def determinant(matrix):
-    """Calculates the determinant of a matrix"""
-    if not isinstance(matrix, list) or len(matrix) == 0:
-        raise TypeError("matrix must be a list of lists")
-    if not all(isinstance(row, list) for row in matrix):
-        raise TypeError("matrix must be a list of lists")
+def definiteness(matrix):
+    """Calculates the definiteness of a matrix"""
+    if not isinstance(matrix, np.ndarray):
+        raise TypeError("matrix must be a numpy.ndarray")
 
-    if len(matrix) == 1 and len(matrix[0]) == 0:
-        return 1
+    if len(matrix.shape) != 2 or matrix.shape[0] != matrix.shape[1] or \
+       not np.allclose(matrix, matrix.T):
+        return None
 
-    if any(len(row) != len(matrix) for row in matrix):
-        raise ValueError("matrix must be a square matrix")
+    try:
+        eigenvalues = np.linalg.eigvals(matrix)
+    except np.linalg.LinAlgError:
+        return None
 
-    n = len(matrix)
-    if n == 1:
-        return matrix[0][0]
-    if n == 2:
-        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    pos = np.all(eigenvalues > 0)
+    pos_semi = np.all(eigenvalues >= 0)
+    neg = np.all(eigenvalues < 0)
+    neg_semi = np.all(eigenvalues <= 0)
 
-    det = 0
-    for j in range(n):
-        # Create the sub-matrix (minor)
-        minor = [row[:j] + row[j+1:] for row in matrix[1:]]
-        # Calculate cofactor and add to total determinant
-        det += ((-1) ** j) * matrix[0][j] * determinant(minor)
+    if pos:
+        return "Positive definite"
+    if neg:
+        return "Negative definite"
+    if pos_semi:
+        return "Positive semi-definite"
+    if neg_semi:
+        return "Negative semi-definite"
 
-    return det
+    return "Indefinite"
