@@ -38,8 +38,6 @@ def determinant(matrix):
     for j in range(n):
         # Create the sub-matrix (minor)
         minor = [row[:j] + row[j+1:] for row in matrix[1:]]
-        
         # Calculate cofactor and add to total determinant
         det += ((-1) ** j) * matrix[0][j] * determinant(minor)
-
     return det
