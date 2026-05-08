@@ -33,14 +33,12 @@ def adjugate(matrix):
     if n == 1:
         return [[1]]
 
-    # Step 1: Calculate the cofactor matrix
-    # Note: We build the transpose (adjugate) directly
     adj = []
     for i in range(n):
         adj_row = []
         for j in range(n):
-            # To get adjugate, we calculate cofactor of (j, i) for element (i, j)
-            # This is the same as calculating cofactors then transposing.
+            # Calculate cofactor of (j, i) to get adjugate element (i, j)
+            # This follows the transpose rule for adjugates
             sub_matrix = [row[:i] + row[i+1:] for k, row in enumerate(matrix)
                           if k != j]
             minor_val = determinant(sub_matrix)
