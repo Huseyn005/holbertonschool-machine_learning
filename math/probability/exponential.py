@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Module for Exponential distribution"""
+
+
 class Exponential:
     """Class that represents an exponential distribution"""
     def __init__(self, data=None, lambtha=1.):
