@@ -41,6 +41,7 @@ class Normal:
         """Calculates the value of the CDF for a given x-value"""
         pi = 3.1415926536
         value = (x - self.mean) / (self.stddev * (2 ** 0.5))
-        erf = (2 / (pi ** 0.5)) * (value - (value ** 3) / 3 + (value ** 5) / 10 -
+        erf = (2 / (pi ** 0.5)) * (value - (value ** 3) / 3 +
+         (value ** 5) / 10 -
                                    (value ** 7) / 42 + (value ** 9) / 216)
         return 0.5 * (1 + erf)
