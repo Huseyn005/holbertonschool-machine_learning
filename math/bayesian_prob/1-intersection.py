@@ -4,11 +4,11 @@ import numpy as np
 
 
 def intersection(x, n, P, Pr):
-    """Calculates the intersection of data with various hypothetical"""
+    """Calculates the intersection of data with various hypothetical """
     if not isinstance(n, int) or n <= 0:
         raise ValueError("n must be a positive integer")
     if not isinstance(x, int) or x < 0:
-        raise ValueError("x must be an integer that is greater")
+        raise ValueError("x must be an integer that is greater than or equal")
     if x > n:
         raise ValueError("x cannot be greater than n")
     if not isinstance(P, np.ndarray) or len(P.shape) != 1:
@@ -21,10 +21,9 @@ def intersection(x, n, P, Pr):
         raise ValueError("All values in Pr must be in the range [0, 1]")
     if not np.isclose(np.sum(Pr), 1):
         raise ValueError("Pr must sum to 1")
-    # nCx = n! / (x!(n-x)!)
+    # nCx calculation using vector-friendly approach
     fact = np.math.factorial
     comb = fact(n) / (fact(x) * fact(n - x))
     # Likelihood = (nCx) * p^x * (1-p)^(n-x)
     likelihood = comb * (P ** x) * ((1 - P) ** (n - x))
-    # Intersection = Likelihood * Prior
     return likelihood * Pr
