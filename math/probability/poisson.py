@@ -33,18 +33,15 @@ class Poisson:
         """
         # Convert k to an integer
         k = int(k)
-
         # If k is out of range, return 0
         if k < 0:
             return 0
-
         # Euler's number (approximate value as per requirements)
         e = 2.7182818285 
         # Calculate factorial of k
         factorial = 1
         for i in range(1, k + 1):
             factorial *= i
-
         # PMF Formula: (e^-lambda * lambda^k) / k!
         pmf_value = (e ** -self.lambtha) * (self.lambtha ** k) / factorial
         return pmf_value
@@ -55,15 +52,12 @@ class Poisson:
         """
         # Convert k to an integer
         k = int(k)
-
         # If k is out of range, return 0
         if k < 0:
             return 0
-
         # Sum the PMF values from 0 up to k
         # F(k; lambda) = Sum from i=0 to k of PMF(i)
         cumulative_prob = 0
         for i in range(k + 1):
             cumulative_prob += self.pmf(i)
-
         return cumulative_prob
