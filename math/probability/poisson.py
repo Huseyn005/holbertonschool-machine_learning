@@ -23,8 +23,7 @@ class Poisson:
             if not isinstance(data, list):
                 raise TypeError("data must be a list")
             if len(data) < 2:
-                raise ValueError("data must contain multiple values")
-            
+                raise ValueError("data must contain multiple values")        
             # Calculate lambtha (mean of the data)
             self.lambtha = float(sum(data) / len(data))
 
@@ -40,8 +39,7 @@ class Poisson:
             return 0
 
         # Euler's number (approximate value as per requirements)
-        e = 2.7182818285
-        
+        e = 2.7182818285 
         # Calculate factorial of k
         factorial = 1
         for i in range(1, k + 1):
@@ -49,7 +47,6 @@ class Poisson:
 
         # PMF Formula: (e^-lambda * lambda^k) / k!
         pmf_value = (e ** -self.lambtha) * (self.lambtha ** k) / factorial
-        
         return pmf_value
 
     def cdf(self, k):
