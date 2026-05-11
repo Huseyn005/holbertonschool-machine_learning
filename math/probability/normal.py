@@ -4,7 +4,6 @@
 
 class Normal:
     """Class that represents a normal distribution"""
-
     def __init__(self, data=None, mean=0., stddev=1.):
         """Initialize Normal distribution"""
         if data is None:
@@ -40,8 +39,8 @@ class Normal:
     def cdf(self, x):
         """Calculates the value of the CDF for a given x-value"""
         pi = 3.1415926536
-        value = (x - self.mean) / (self.stddev * (2 ** 0.5))
-        erf = (2 / (pi ** 0.5)) * (value - (value ** 3) / 3 +
-        (value ** 5) / 10 - (value ** 7) /
-        42 + (value ** 9) / 216)
+        v = (x - self.mean) / (self.stddev * (2 ** 0.5))
+        erf = (2 / (pi ** 0.5)) * (v - (v ** 3) / 3 + (v ** 5) / 10 -
+                                   (v ** 7) / 42 + (v ** 9) / 216)
         return 0.5 * (1 + erf)
+    
