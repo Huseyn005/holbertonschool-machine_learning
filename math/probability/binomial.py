@@ -30,6 +30,7 @@ class Binomial:
         if k < 0 or k > self.n:
             return 0
         # Combination nCk = n! / (k!(n-k)!)
+        
         def factorial(num):
             res = 1
             for i in range(1, num + 1):
