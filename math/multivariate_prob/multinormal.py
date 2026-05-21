@@ -5,7 +5,7 @@ import numpy as np
 
 class MultiNormal:
     """Represents a Multivariate Normal distribution"""
-    
+
     def __init__(self, data):
         """Initializes the MultiNormal class with data"""
         if not isinstance(data, np.ndarray) or len(data.shape) != 2:
