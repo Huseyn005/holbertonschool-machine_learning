@@ -1,24 +1,12 @@
 #!/usr/bin/env python3
-"""
-Defines a function that creates a pd.DataFrame from a np.ndarray
-"""
+"""Module to index and concatenate two separate financial DataFrames."""
 import pandas as pd
 
 
-def from_numpy(array):
-    """
-    Creates a pd.DataFrame from a np.ndarray with alphabetical column labels.
-
-    Args:
-        array (np.ndarray): The numpy array to convert.
-
-    Returns:
-        pd.DataFrame: The newly created DataFrame.
-    """
-    # Find the total number of columns in the numpy array
-    num_cols = array.shape[1]
-
-    # Dynamically generate alphabet headers ('A', 'B', 'C', ...) using ASCII
-    columns = [chr(65 + i) for i in range(num_cols)]
-
-    return pd.DataFrame(array, columns=columns)
+def concat(df1, df2):
+    """Index dataframes, filter rows, and merge them with multi-keys."""
+    index_func = __import__('10-index').index
+    df1 = index_func(df1)
+    df2 = index_func(df2)
+    df2_filtered = df2.loc[:1417411920]
+    return pd.concat([df2_filtered, df1], keys=['bitstamp', 'coinbase'])
