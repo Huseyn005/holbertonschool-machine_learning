@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 def frequency():
     """
-    Plots a histogram representing the frequency of student grades for Project A.
+    Plots a histogram representing the frequency of student grades.
     """
     np.random.seed(5)
     student_grades = np.random.normal(68, 15, 50)
