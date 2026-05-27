@@ -1,21 +1,26 @@
 #!/usr/bin/env python3
 """
-Defines a function that computes descriptive statistics for a pd.DataFrame
+Defines a function that renames and modifies a specific pd.DataFrame
 """
 import pandas as pd
 
 
-def analyze(df):
+def rename(df):
     """
-    Computes descriptive statistics for all columns except Timestamp.
+    Renames the Timestamp column to Datetime, converts the values to
+    datetime objects, and filters to display only Datetime and Close.
 
     Args:
         df: The input DataFrame.
 
     Returns:
-        A new DataFrame containing the descriptive statistics (count, mean,
-        std, min, 25%, 50%, 75%, max).
+        The modified DataFrame with only Datetime and Close columns.
     """
-    # 1. Drop the 'Timestamp' column if it exists in the standard columns
-    # 2. Compute descriptive statistics using .describe()
-    return df.drop(columns=['Timestamp'], errors='ignore').describe()
+    # Rename the column
+    df = df.rename(columns={'Timestamp': 'Datetime'})
+
+    # Convert UNIX timestamp to datetime
+    df['Datetime'] = pd.to_datetime(df['Datetime'], unit='s')
+
+    # Return only the requested columns
+    return df[['Datetime', 'Close']]
