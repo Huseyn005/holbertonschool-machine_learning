@@ -1,27 +1,26 @@
-3. Rename
-Write a function def rename(df): that takes a pd.DataFrame as input and performs the following:
-
-df is a pd.DataFrame containing a column named Timestamp.
-The function should rename the Timestamp column to Datetime.
-Convert the timestamp values to datatime values
-Display only the Datetime and Close column
-Returns: the modified pd.DataFrame
-$ cat 3-main.py
 #!/usr/bin/env python3
+"""
+Defines a function that renames and modifies a specific pd.DataFrame
+"""
+import pandas as pd
 
-from_file = __import__('2-from_file').from_file
-rename = __import__('3-rename').rename
 
-df = from_file('coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv', ',')
+def rename(df):
+    """
+    Renames the Timestamp column to Datetime, converts the values to
+    datetime objects, and filters to display only Datetime and Close.
 
-df = rename(df)
+    Args:
+        df (pd.DataFrame): The input DataFrame.
 
-print(df.tail())
-$ ./3-main.py
-                   Datetime    Close
-2099755 2019-01-07 22:02:00  4006.01
-2099756 2019-01-07 22:03:00  4006.01
-2099757 2019-01-07 22:04:00  4006.01
-2099758 2019-01-07 22:05:00  4005.50
-2099759 2019-01-07 22:06:00  4005.99
-$
+    Returns:
+        pd.DataFrame: The modified DataFrame with only Datetime and Close.
+    """
+    # Rename the column
+    df = df.rename(columns={'Timestamp': 'Datetime'})
+
+    # Convert UNIX timestamp to datetime
+    df['Datetime'] = pd.to_datetime(df['Datetime'], unit='s')
+
+    # Return only the requested columns
+    return df[['Datetime', 'Close']]
