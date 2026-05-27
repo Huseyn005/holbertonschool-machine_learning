@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 """
-Defines a function that converts a slice of a DataFrame to a np.ndarray
+Defines a function that slices specific dimensions of a pd.DataFrame
 """
 
 
-def array(df):
+def slice(df):
     """
-    Selects the last 10 rows of the High and Close columns from a DataFrame
-    and converts them into a numpy.ndarray.
+    Extracts specific columns and selects every 60th row.
 
     Args:
         df: The input DataFrame.
 
     Returns:
-        The numpy array of the selected values.
+        The sliced DataFrame containing every 60th row of High,
+        Low, Close, and Volume_(BTC).
     """
-    return df[['High', 'Close']].tail(10).to_numpy()
+    # 1. Extract the specified columns
+    # 2. Use standard Python slicing [::60] to grab every 60th row
+    return df[['High', 'Low', 'Close', 'Volume_(BTC)']][::60]
