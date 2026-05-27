@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
+"""Module that contains a function to plot fruit distribution."""
 import numpy as np
 import matplotlib.pyplot as plt
 
-def bars():
-    np.random.seed(5)
-    fruit = np.random.randint(0, 20, (4,3))
-    plt.figure(figsize=(6.4, 4.8))
 
-    # --- Your Code Here ---
+def bars():
+    """Plots a stacked bar chart representing fruit per person."""
+    np.random.seed(5)
+    fruit = np.random.randint(0, 20, (4, 3))
+    plt.figure(figsize=(6.4, 4.8))
     
     # Define names for X-axis ticks
     people = ['Farrah', 'Fred', 'Felicia']
@@ -21,8 +22,9 @@ def bars():
     
     # Plot each row (fruit) stacked on top of the previous ones
     for i in range(len(fruit)):
-        plt.bar(people, fruit[i], width=0.5, bottom=bottoms, color=colors[i], label=fruit_types[i])
-        bottoms += fruit[i] # Update the bottom position for the next layer
+        plt.bar(people, fruit[i], width=0.5, bottom=bottoms,
+                color=colors[i], label=fruit_types[i])
+        bottoms += fruit[i]   # Update the bottom position
         
     # Set the title and labels
     plt.title('Number of Fruit per Person')
@@ -34,7 +36,4 @@ def bars():
     
     # Display the legend
     plt.legend()
-    
-    # --- End of Code ---
-
     plt.show()
