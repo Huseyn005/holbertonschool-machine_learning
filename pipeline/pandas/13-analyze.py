@@ -1,26 +1,17 @@
 #!/usr/bin/env python3
 """
-Defines a function that renames and modifies a specific pd.DataFrame
+Defines a function that computes descriptive statistics for a pd.DataFrame
 """
-import pandas as pd
 
 
-def rename(df):
+def analyze(df):
     """
-    Renames the Timestamp column to Datetime, converts the values to
-    datetime objects, and filters to display only Datetime and Close.
+    Computes descriptive statistics for all columns except Timestamp.
 
     Args:
         df: The input DataFrame.
 
     Returns:
-        The modified DataFrame with only Datetime and Close columns.
+        A new DataFrame containing the descriptive statistics.
     """
-    # Rename the column
-    df = df.rename(columns={'Timestamp': 'Datetime'})
-
-    # Convert UNIX timestamp to datetime
-    df['Datetime'] = pd.to_datetime(df['Datetime'], unit='s')
-
-    # Return only the requested columns
-    return df[['Datetime', 'Close']]
+    return df.drop(columns=['Timestamp'], errors='ignore').describe()
