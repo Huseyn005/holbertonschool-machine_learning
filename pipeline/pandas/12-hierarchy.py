@@ -1,38 +1,41 @@
-12. Hierarchy
-Based on 11-concat.py, write a function def hierarchy(df1, df2): that takes two pd.DataFrame objects and:
-
-Rearranges the MultiIndex so that Timestamp is the first level.
-Concatenates the bitstamp and coinbase tables from timestamps 1417411980 to 1417417980, inclusive.
-Adds keys to the data, labeling rows from df2 as bitstamp and rows from df1 as coinbase.
-Ensures the data is displayed in chronological order.
-You should use index = __import__('10-index').index.
-Returns: the concatenated pd.DataFrame.
-$ cat 12-main.py
 #!/usr/bin/env python3
+"""
+Defines a function that creates a rearranged MultiIndex DataFrame
+"""
+import pandas as pd
+index = __import__('10-index').index
 
-from_file = __import__('2-from_file').from_file
-hierarchy = __import__('12-hierarchy').hierarchy
 
-df1 = from_file('coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv', ',')
-df2 = from_file('bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv', ',')
+def hierarchy(df1, df2):
+    """
+    Concatenates two DataFrames between specific timestamps, adds keys,
+    and rearranges the MultiIndex levels so Timestamp is the first level.
 
-df = hierarchy(df1, df2)
+    Args:
+        df1: The first DataFrame (coinbase).
+        df2: The second DataFrame (bitstamp).
 
-print(df)
-$ ./12-main.py
-                       Open   High     Low   Close  Volume_(BTC)  Volume_(Currency)  Weighted_Price
-Timestamp
-1417411980 bitstamp  379.99  380.0  379.99  380.00      3.901265        1482.461708      379.995162
-           coinbase  300.00  300.0  300.00  300.00      0.010000           3.000000      300.000000
-1417412040 bitstamp  380.00  380.0  380.00  380.00     35.249895       13394.959997      380.000000
-           coinbase     NaN    NaN     NaN     NaN           NaN                NaN             NaN
-1417412100 bitstamp  380.00  380.0  380.00  380.00      3.712000        1410.560000      380.000000
-...                     ...    ...     ...     ...           ...                ...             ...
-1417417860 coinbase     NaN    NaN     NaN     NaN           NaN                NaN             NaN
-1417417920 bitstamp  380.09  380.1  380.09  380.10      1.503000         571.285290      380.096667
-           coinbase     NaN    NaN     NaN     NaN           NaN                NaN             NaN
-1417417980 bitstamp  380.10  380.1  378.85  378.85     26.599796       10079.364182      378.926376
-           coinbase     NaN    NaN     NaN     NaN           NaN                NaN             NaN
+    Returns:
+        The transformed DataFrame with swapped index levels sorted
+        in chronological order.
+    """
+    # 1. Index both dataframes on their Timestamp columns
+    df1_indexed = index(df1)
+    df2_indexed = index(df2)
 
-[202 rows x 7 columns]
-$
+    # 2. Slice both dataframes to include only timestamps from
+    # 1417411980 to 1417417980 inclusive
+    df1_filtered = df1_indexed.loc[1417411980:1417417980]
+    df2_filtered = df2_indexed.loc[1417411980:1417417980]
+
+    # 3. Concatenate bitstamp on top of coinbase with structural keys
+    df = pd.concat([df2_filtered, df1_filtered], keys=['bitstamp', 'coinbase'])
+
+    # 4. Rearrange MultiIndex levels so Timestamp is level 0 and keys are level 1
+    # .swaplevel(0, 1) switches their order positions
+    df = df.swaplevel(0, 1)
+
+    # 5. Sort the data chronologically by index (Timestamp first)
+    df = df.sort_index()
+
+    return df
