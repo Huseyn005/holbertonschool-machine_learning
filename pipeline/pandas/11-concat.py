@@ -1,32 +1,24 @@
 #!/usr/bin/env python3
 """
-Defines a function that concatenates specific slices of two pd.DataFrames
+Defines a function that creates a pd.DataFrame from a np.ndarray
 """
 import pandas as pd
-index = __import__('10-index').index
 
 
-def concat(df1, df2):
+def from_numpy(array):
     """
-    Indexes two dataframes on Timestamp, filters df2 up to 1417411920,
-    and concatenates them with specific keys.
+    Creates a pd.DataFrame from a np.ndarray with alphabetical column labels.
 
     Args:
-        df1: The first DataFrame (coinbase).
-        df2: The second DataFrame (bitstamp).
+        array (np.ndarray): The numpy array to convert.
 
     Returns:
-        The concatenated DataFrame with hierarchical indexing.
+        pd.DataFrame: The newly created DataFrame.
     """
-    # Index both dataframes using the imported index function
-    df1_indexed = index(df1)
-    df2_indexed = index(df2)
+    # Find the total number of columns in the numpy array
+    num_cols = array.shape[1]
 
-    # Filter bitstamp data up to and including timestamp 1417411920
-    df2_filtered = df2_indexed.loc[:1417411920]
+    # Dynamically generate alphabet headers ('A', 'B', 'C', ...) using ASCII
+    columns = [chr(65 + i) for i in range(num_cols)]
 
-    # Concatenate df2 on top of df1 with specified multi-index keys
-    return pd.concat(
-        [df2_filtered, df1_indexed],
-        keys=['bitstamp', 'coinbase']
-    )
+    return pd.DataFrame(array, columns=columns)
